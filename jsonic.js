@@ -158,7 +158,7 @@ function define (exp, a) {
 function makeProcedure (exp, a) {
     return ["lambda",
                car(exp), // parameter list
-               atom(caadr(exp)) ? cadr(exp) : ["begin",cadr(exp)], // body as an expr, or expr list
+               atom(caadr(exp)) ? cadr(exp) : ["begin"].concat(cadr(exp)), // body as an expr, or expr list
                localContext(a)]; // create new local scope
 }
 

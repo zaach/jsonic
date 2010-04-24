@@ -19,7 +19,7 @@ exports["test cons"] = function () {
 }
 
 exports["test car"] = function () {
-    assert.deepEqual(jsonic.eval(["car", ["quote", ["A", "B"]]]), "A");
+    assert.equal(jsonic.eval(["car", ["quote", ["A", "B"]]]), "A");
 }
 
 exports["test cdr"] = function () {
@@ -33,28 +33,63 @@ exports["test math operators"] = function () {
     assert.equal(jsonic.eval(["/",6,2]), 3);
 }
 
+exports["test begin"] = function () {
+    assert.equal(jsonic.eval(["begin", 1, 2, 3]), 3);
+}
+
 exports["test define returns NIL"] = function () {
     assert.deepEqual(jsonic.eval(["define", "x", 3]), []);
 }
 
 exports["test begin and defined variable value"] = function () {
-    assert.deepEqual(jsonic.eval(["begin",
-                ["define", "x", 3],
-                "x"]), 3);
+    assert.equal(jsonic.eval(
+                    ["begin",
+                        ["define", "x", 3],
+                        "x"
+                    ]
+                ),
+                    3
+                );
 }
 
 exports["test lambda define"] = function () {
-    assert.deepEqual(jsonic.eval(["begin",
-                ["define", "y", ["lambda", ["z"], ["car", "z"]]],
-                ["y", ["quote", ["A","B"]]] ]), "A");
+    assert.equal(jsonic.eval(
+                    ["begin",
+                        ["define", "y", ["lambda", ["z"], ["car", "z"]]],
+                        ["y", ["quote", ["A","B"]]]
+                    ]
+                ),
+                    "A"
+                );
 }
 
 exports["test lambda application"] = function () {
-    assert.deepEqual(jsonic.eval([["lambda", ["x","y","z"], ["+","x","y","z"]], 1, 2, 3]), 6);
+    assert.equal(jsonic.eval(
+                    [["lambda", ["x","y","z"], ["+","x","y","z"]], 1, 2, 3]
+                ),
+                    6
+                );
+}
+
+exports["test lambda with sequence of body expressions"] = function () {
+    assert.equal(jsonic.eval(
+                    [["lambda", ["x","y","z"], [["+","x","y","z"], ["+", "x", 10]]], 1, 2, 3]
+                ),
+                    11
+                );
 }
 
 exports["test list"] = function () {
-    assert.deepEqual(jsonic.eval(["list", ["quote", "A"], ["quote", "B"], ["quote", "C"]]), ["A", "B", "C"]);
+    assert.deepEqual(jsonic.eval(
+                    ["list", ["quote", "A"], ["quote", "B"], ["quote", "C"]]
+                ),
+                    ["A", "B", "C"]
+                );
+}
+
+exports["test cond"] = function () {
+    assert.deepEqual(jsonic.eval( ["cond", ["T", 1], ["T", 2]]), 1);
+    assert.deepEqual(jsonic.eval( ["cond", ["F", 1], ["T", 2]]), 2);
 }
 
 if (require.main === module) {
