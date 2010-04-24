@@ -45,8 +45,7 @@ exports["test begin and defined variable value"] = function () {
     assert.equal(jsonic.eval(
                     ["begin",
                         ["define", "x", 3],
-                        "x"
-                    ]
+                        "x"]
                 ),
                     3
                 );
@@ -56,8 +55,7 @@ exports["test lambda define"] = function () {
     assert.equal(jsonic.eval(
                     ["begin",
                         ["define", "y", ["lambda", ["z"], ["car", "z"]]],
-                        ["y", ["quote", ["A","B"]]]
-                    ]
+                        ["y", ["quote", ["A","B"]]] ]
                 ),
                     "A"
                 );

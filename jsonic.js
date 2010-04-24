@@ -185,7 +185,7 @@ function equal (x,y) {
 }
 
 function knull (x) {
-    return x.length === 0;
+    return x instanceof Array && x.length === 0;
 }
 
 
