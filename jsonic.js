@@ -101,6 +101,7 @@ function apply (fn, x, context) {
             eq(fn,"-") ? (reduceOp(sub, x)) :
             eq(fn,"*") ? (reduceOp(mul, x)) :
             eq(fn,"/") ? (reduceOp(div, x)) :
+            eq(fn,"print") ? printexpr(car(x)) :
             apply(evall(fn, context), x, context) :
         eq(car(fn),"lambda") ? evall(caddr(fn), localContext(caddr(cdr(fn)), pairArgs(fn, x))) :
         NIL ;
@@ -149,7 +150,7 @@ function evalseq (m,a) {
             (evall(car(m), a), evalseq(cdr(m), a));
 }
 
-// associates a value with a variable name in the current context and returns the value
+// associates a value with a variable name in the current context and returns NIL
 function define (exp, a) {
     addContext(a, [[car(exp), evall(cadr(exp), a)]]), lookup(car(exp), a);
     return NIL;
@@ -188,7 +189,7 @@ function repl (context) {
     print('jsonic REPL. Enter \'quit\' to exit.');
     var inp = readline();
     while (inp !== 'quit') {
-        printexpr(evall(JSON.parse(inp), context));
+        if (inp.trim()) printexpr(evall(JSON.parse(inp), context));
         inp = readline();
     }
 }
