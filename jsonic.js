@@ -44,7 +44,7 @@ function lookup (name, context) {
 
 function lookup2 (name, context) {
     if (!context[0]) throw 'undefined variable: '+name;
-    return context[0][name] ? context[0][name] :
+    return typeof context[0][name] !== 'undefined' ? context[0][name] :
            lookup2(name, context[1]);
 }
 
@@ -121,7 +121,7 @@ function evall (form, context) {
                 eq(car(form),"debugger") ? repl(context) :
                 eq(car(form),"list") ? evallist(cdr(form), context) :
                 apply(car(form), evallist(cdr(form), context), context) :
-           apply(car(form), evallist(cdr(form), context), context);
+           apply(evall(car(form), context), evallist(cdr(form), context), context);
 }
 
 function evalcond (c, a) {

@@ -92,6 +92,20 @@ exports["test cond"] = function () {
     assert.deepEqual(jsonic.eval( ["cond", ["F", 1], ["T", 2]]), 2);
 }
 
+exports["test fibonacci"] = function () {
+    assert.equal(jsonic.eval(
+                    ["begin",
+                        ["define", "fib",
+                            ["lambda", ["n"],
+                                ["cond", [["eq", "n", 0], 0],
+                                         [["eq", "n", 1], 1],
+                                         ["T", ["+", ["fib", ["-", "n", 1]], ["fib", ["-", "n", 2]]]] ]]],
+                        ["fib", 6]]
+                ),
+                    8
+                );
+}
+
 if (require.main === module) {
     require("os").exit(require("test").run(exports)); 
 }
