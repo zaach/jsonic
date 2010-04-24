@@ -6,7 +6,18 @@ exports.jsonic = (function() {
 var jsonic;
 
 var NIL = [];
-var initialContext = {};
+var initialContext = [{
+    car : "car",
+    cdr : "cdr",
+    cons : "cons",
+    eq : "eq",
+    print : "print",
+    atom : "atom",
+    "+" : "+",
+    "-" : "-",
+    "*" : "*",
+    "/" : "/"
+}];
 
 // constant list
 var clist = {"T":"T","F":"F","NIL":[]};

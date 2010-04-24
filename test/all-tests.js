@@ -106,6 +106,16 @@ exports["test fibonacci"] = function () {
                 );
 }
 
+exports["test alias of primitive method"] = function () {
+    assert.equal(jsonic.eval(
+                    ["begin",
+                        ["define", "add", "+"],
+                        ["add", 1,2]]
+                ),
+                    3
+                );
+}
+
 if (require.main === module) {
     require("os").exit(require("test").run(exports)); 
 }
